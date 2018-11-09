@@ -84,7 +84,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   MatrixXd Si = S.inverse();
   MatrixXd K = P_ * Ht * Si;
 
-  y(1) = fmod(y(1), PI);
+  //angle normalization
+  while (y(1)> PI) y(1)-=2.*PI;
+  while (y(1)<-PI) y(1)+=2.*PI;
   /*debug print
   cout << "Z =" << z << endl;
   cout << "Z_pre =" << z_pre << endl;
